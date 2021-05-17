@@ -1,4 +1,4 @@
-const { findWorkerForCustomer, getCustomerByNumber, findRandomWorker } = require('../../providers/customers');
+const { getCustomerByNumber } = require('../../providers/customers');
 const twilioClient = require('../../providers/twilio');
 
 const conversationsCallbackHandler = async (req, res) => {
@@ -8,7 +8,7 @@ const conversationsCallbackHandler = async (req, res) => {
     const eventType = req.body.EventType;
 
     switch (eventType) {
-        case "onConversationAdd":{
+        case "onConversationAdd": {
             /* PRE-WEBHOOK
              *
              * This webhook will be called before creating a conversation.
@@ -36,7 +36,7 @@ const conversationsCallbackHandler = async (req, res) => {
             }
             break;
         }
-        case "onParticipantAdded":{
+        case "onParticipantAdded": {
             /* POST-WEBHOOK
              *
              * This webhook will be called when a participant added to a conversation
@@ -67,40 +67,6 @@ const conversationsCallbackHandler = async (req, res) => {
             }
             break;
         }
-    /*  case "onConversationAdded":{
-            /* POST-WEBHOOK
-             *
-             * This webhook will be called after conversation is created.
-             * 
-             * DO NOT USE THIS WEBHOOK FOR ROUTING PURPOSES IF YOU ENABLED
-             * FRONTLINE INBOUND ROUTING. Otherwise it would cause unexpected behaviour.
-             * 
-             * Given that Frontline Inbound Routing is disabled, manual routing
-             * can be handled here. In that case `onConversationAdd` and
-             * `onParticipantAdded` webhook subscriptions can be disabled.
-             * 
-             * More info about the `onConversationAdded` webhook: https://www.twilio.com/docs/conversations/conversations-webhooks#onconversationadded
-             */
-    /*      const conversationSid = req.body.ConversationSid;
-            const customerNumber = req.body['MessagingBinding.Address'];
-            const isIncomingConversation = !!customerNumber
-
-            if (isIncomingConversation) {
-                const conversationParticipants = await twilioClient.conversations
-                    .conversations(conversationSid)
-                    .participants
-                    .list();
-                const conversationCreator = conversationParticipants[0];
-
-                let customerDetails = await getCustomerDetails(customerNumber);
-
-                await setCustomerParticipantProperties(conversationCreator, customerDetails);
-                await setConversationProperties(conversationSid, customerDetails);
-
-                await routeConversation(conversationSid, customerNumber);
-            }
-            break;
-        }*/
     }
     res.sendStatus(200);
 };
@@ -123,60 +89,6 @@ const setCustomerParticipantProperties = async (customerParticipant, customerDet
             .update(customerProperties)
             .catch(e => console.log("Update customer participant failed: ", e));
     }
-}
-
-const getCustomerDetails = async (customerNumber) => {
-    let customerDetails = await getCustomerByNumber(customerNumber);
-
-    if (!customerDetails) { // Unknown Customer
-        customerDetails = {
-            display_name: customerNumber
-        };
-    }
-    return customerDetails;
-}
-
-const setConversationProperties = async (conversationSid, customerDetails) => {
-    const conversationProperties = {
-        friendlyName: customerDetails.display_name,
-        attributes: JSON.stringify({
-            avatar: customerDetails.avatar
-        })
-    };
-    // Update conversation properties
-    twilioClient.conversations
-        .conversations(conversationSid)
-        .update(conversationProperties)
-        .catch(e => console.log('Update incoming conversation: ', e));
-}
-
-const routeConversation = async (conversationSid, customerNumber) => {
-    let workerIdentity = await findWorkerForCustomer(customerNumber);
-
-    if (!workerIdentity) { // Customer doesn't have a worker
-
-        // Select a random worker
-        workerIdentity = await findRandomWorker();
-
-        // Or you can define default worker for unknown customers.
-        // workerIdentity = 'john@example.com'
-
-        if (!workerIdentity) {
-            console.warn("Routing failed, please add workers to customersToWorkersMap or define a default worker", { conversationSid: conversationSid });
-            return;
-        }
-    }
-    await routeConversationToWorker(conversationSid, workerIdentity);
-}
-
-const routeConversationToWorker = async (conversationSid, workerIdentity) => {
-    // Add worker to the conversation with a customer
-    twilioClient.conversations
-        .conversations(conversationSid)
-        .participants
-        .create({ identity: workerIdentity })
-        .then(participant => console.log('Create agent participant: ', participant.sid))
-        .catch(e => console.log('Create agent participant: ', e));
 }
 
 module.exports = conversationsCallbackHandler;
