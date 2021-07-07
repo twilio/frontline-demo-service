@@ -1,7 +1,10 @@
-# Frontline Demo Service
+# Frontline Integration Service Example
+
+This repository contains an example server-side web application that is required to use [Twilio Frontline](https://www.twilio.com/frontline).
 
 ## Prerequisites
-
+- A Twilio Account. Don't have one? [Sign up](https://www.twilio.com/try-twilio) for free!
+- Follow the quickstart tutorial [here](https://www.twilio.com/docs/frontline/nodejs-demo-quickstart).
 - NodeJS (latest or LTS)
 - Yarn
 
