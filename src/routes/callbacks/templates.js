@@ -1,7 +1,7 @@
 const { getCustomerById } = require('../../providers/customers');
 
 const templatesCallbackHandler = async (req, res) => {
-    const location = req.query.location;
+    const location = req.body.Location;
 
     // Location helps to determine which information was requested.
     // CRM callback is a general purpose tool and might be used to fetch different kind of information
@@ -22,7 +22,7 @@ const handleGetTemplatesByCustomerIdCallback = async (req, res) => {
     const body = req.body
     console.log('Getting templates: ', body.CustomerId);
 
-    const workerIdentity = req.tokenInfo.identity;
+    const workerIdentity = body.Worker;
     const customerId = body.CustomerId;
     const conversationSid = body.ConversationSid;
 

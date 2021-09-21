@@ -3,7 +3,7 @@ const config = require('../../config');
 const outgoingConversationCallbackHandler = (req, res) => {
     console.log('outgoingConversationCallbackHandler');
 
-    const location = req.query.location;
+    const location = req.body.Location;
 
     // Location helps to determine which action to perform.
     switch (location) {
@@ -23,10 +23,10 @@ const handleGetProxyAddress = (req, res) => {
     console.log('Getting Proxy Address');
 
     const body = req.body;
-    const workerIdentity = req.tokenInfo.identity;
+    const workerIdentity = body.Worker;
     const customerId = body.CustomerId;
-    const channelName = body.Channel.type;
-    const channelAddress = body.Channel.value;
+    const channelName = body.ChannelType;
+    const channelAddress = body.ChannelValue;
 
     const proxyAddress = getCustomerProxyAddress(channelName);
 

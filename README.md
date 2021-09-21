@@ -30,7 +30,6 @@ PORT # default 5000
 # Twilio account variables
 TWILIO_ACCOUNT_SID=ACXXX...
 TWILIO_AUTH_TOKEN
-TWILIO_SSO_REALM_SID=JBXXX...
 
 # Variables for chat configuration
 TWILIO_SMS_NUMBER # Twilio number for incoming/outgoing SMS

@@ -1,14 +1,9 @@
 const { getCustomerById, getCustomersList } = require('../../providers/customers');
 
 const crmCallbackHandler = async (req, res) => {
-    const location = req.query.location;
-
+    const location = req.body.Location;
     // Location helps to determine which information was requested.
     // CRM callback is a general purpose tool and might be used to fetch different kind of information
-    const workerIdentity = req.tokenInfo.identity;
-    if (workerIdentity !== req.body.Worker) {
-        return res.status(401).send('Worker and token does not match');
-    }
 
     switch (location) {
         case 'GetCustomerDetailsByCustomerId': {
@@ -31,7 +26,7 @@ const handleGetCustomerDetailsByCustomerIdCallback = async (req, res) => {
     const body = req.body;
     console.log('Getting Customer details: ', body.CustomerId);
 
-    const workerIdentity = req.tokenInfo.identity;
+    const workerIdentity = body.Worker;
     const customerId = body.CustomerId;
 
     // Fetch Customer Details based on his ID
@@ -57,7 +52,7 @@ const handleGetCustomersListCallback = async (req, res) => {
     console.log('Getting Customers list');
 
     const body = req.body;
-    const workerIdentity = req.tokenInfo.identity;
+    const workerIdentity = req.body.Worker;
     const pageSize = body.PageSize;
     const anchor = body.Anchor;
 
