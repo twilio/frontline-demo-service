@@ -53,7 +53,7 @@ const handleGetCustomersListCallback = async (req, res) => {
 
     const body = req.body;
     const workerIdentity = req.body.Worker;
-    const pageSize = body.PageSize;
+    const pageSize = parseInt(body.PageSize);
     const anchor = body.Anchor;
 
     // Fetch Customers list based on information about a worker, that requested it
