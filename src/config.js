@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const _ = (varName, defaults) => process.env[varName] || defaults || null;
 
-const port = _('PORT', 5000);
+const port = _('PORT', 5001);
 
 module.exports = {
     port: port,
