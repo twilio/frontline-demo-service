@@ -25,7 +25,7 @@ yarn run start
 
 ```
 # Service variables
-PORT # default 5000
+PORT # default 5001
 
 # Twilio account variables
 TWILIO_ACCOUNT_SID=ACXXX...
