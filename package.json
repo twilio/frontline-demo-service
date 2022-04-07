@@ -7,6 +7,7 @@
   "author": "Twilio <twilio.com>",
   "license": "MIT",
   "scripts": {
+    "test": "jest",
     "start": "node src/index.js"
   },
   "engines": {
@@ -18,5 +19,8 @@
     "express": "^4.17.1",
     "twilio": "^3.67.1",
     "uuid": "^7.0.3"
+  },
+  "devDependencies": {
+    "jest": "^27.4.7"
   }
 }
