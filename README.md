@@ -80,4 +80,10 @@ Detailed information can be found in **Quickstart**, provided by Frontline team.
 
 ## Troubleshooting
 
-If you experience issues running the Node.js server on port `5001`, you can use any other free port. Make sure you specify it [here](./src/config.js).
+### Port issues
+
+If you experience issues running the Node.js server on port `5001`, you can use any other free port.
+
+You can add `PORT=xxxx` to the `.env`. 
+
+Alternatively, you can edit it [here](./src/config.js). Note that the one from the `.env` file will override the one on [src/config.js](./src/config.js).
