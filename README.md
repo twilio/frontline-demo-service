@@ -25,7 +25,7 @@ yarn run start
 
 ```
 # Service variables
-PORT # default 5000
+PORT # default 5001
 
 # Twilio account variables
 TWILIO_ACCOUNT_SID=ACXXX...
@@ -80,18 +80,10 @@ Detailed information can be found in **Quickstart**, provided by Frontline team.
 
 ## Troubleshooting
 
-You might experience issues running nodejs server on port `5000` on Mac due to port conflict.
+### Port issues
 
-You can check currently occupied port
-```shell
-lsof -Pnl +M -i -cmd | grep LISTEN | grep 5000
-```
-If it shows a process named "ControlCe", e.g.
-```text
-ControlCe  500 66124045   21u  IPv4 0xf7d7c5f766213acb      0t0                 TCP *:5000 (LISTEN)
-```
-then you have Airplay Receiver using this port.
-[This article](https://anandtripathi5.medium.com/port-5000-already-in-use-macos-monterey-issue-d86b02edd36c)
-explains the issue.
+If you experience issues running the Node.js server on port `5001`, you can use any other free port.
 
-**TL;DR** Open **System Preferences -> Sharing**: Uncheck **Airport Receiver**
+You can add `PORT=xxxx` to the `.env`. 
+
+Alternatively, you can edit it [here](./src/config.js). Note that the one from the `.env` file will override the one on [src/config.js](./src/config.js).
