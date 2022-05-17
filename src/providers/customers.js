@@ -1,6 +1,5 @@
-// Map between customer address and worker identity
-// Used to determine to which worker route a new conversation with a particular customer
-//
+// For Inbound Routing: Map between customer address and worker identity
+// Used to determine to which worker a new conversation with a particular customer should be routed to.
 // {
 //     customerAddress: workerIdentity
 // }
