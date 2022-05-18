@@ -2,7 +2,7 @@
 
 This repository contains an example server-side web application that is required to use [Twilio Frontline](https://www.twilio.com/frontline).
 
-It creates 5 routes that are intended to be configured in your Twilio Frontline Console:
+It creates the following routes that you will then need to add to your Twilio Frontline Console:
 
 - `/callbacks/crm`
 - `/callbacks/outgoing-conversation`
