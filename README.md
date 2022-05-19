@@ -2,9 +2,19 @@
 
 This repository contains an example server-side web application that is required to use [Twilio Frontline](https://www.twilio.com/frontline).
 
+It creates the following routes that you will then need to add to your Twilio Frontline Console:
+
+- `/callbacks/crm`
+- `/callbacks/outgoing-conversation`
+- `/callbacks/templates`
+- `/callbacks/routing`
+- `/callbacks/twilio-conversations`
+
+Detailed information can be found in the [Node.js Quickstart](https://www.twilio.com/docs/frontline/nodejs-demo-quickstart).
+
 ## Prerequisites
 - A Twilio Account. Don't have one? [Sign up](https://www.twilio.com/try-twilio) for free!
-- Follow the quickstart tutorial [here](https://www.twilio.com/docs/frontline/nodejs-demo-quickstart).
+- Follow the [quickstart tutorial](https://www.twilio.com/docs/frontline/nodejs-demo-quickstart).
 - NodeJS (latest or LTS)
 - Yarn
 
@@ -37,11 +47,11 @@ TWILIO_WHATSAPP_NUMBER # Twilio number for incoming/outgoing Whatsapp
 ```
 
 ## Setting up customers and mapping
-The customer data can be configured in ```src/routes/callbacks/crm.js```.
-
-Quick definition of customer's objects can be found below.
+The customer data can be configured in [src/providers/customers.js](src/providers/customers.js).
 
 ### Map between customer address + worker identity pair.
+For inbound routing: Used to determine to which worker a new conversation with a particular customer should be routed to.
+
 ```js
 {
     customerAddress: workerIdentity
@@ -55,13 +65,17 @@ const customersToWorkersMap = {
 }
 ```
 
+
 ### Customers list
+In the CRM callback reponse, each [customer object](https://www.twilio.com/docs/frontline/data-transfer-objects#customer) should look like this: 
+
 Example:
 ```js
 const customers = [
     {
-        customer_id: 98,
-        display_name: 'Bobby Shaftoe',
+        customer_id: 98, // required
+        display_name: 'Bobby Shaftoe', // required
+        worker: 'joe@example.com', // required
         channels: [
             { type: 'email', value: 'bobby@example.com' },
             { type: 'sms', value: '+123456789' },
@@ -70,13 +84,17 @@ const customers = [
         links: [
             { type: 'Facebook', value: 'https://facebook.com', display_name: 'Social Media Profile' }
         ],
-        worker: 'joe@example.com'
-    }
+    },
+    //... more customer objects
 ];
 ```
 
----
-Detailed information can be found in **Quickstart**, provided by Frontline team.
+Response format:
+```plain
+objects: {
+    customers: customers
+}
+```
 
 ## Troubleshooting
 
