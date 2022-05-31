@@ -19,6 +19,7 @@ function logRoutes(port) {
   console.log(
     'Read more: https://www.twilio.com/docs/frontline/nodejs-demo-quickstart#configure-the-twilio-frontline-integration-service'
   );
+}  
 
 app.listen(config.port, () => {
   console.info(`Application started at http://localhost:${config.port}`);
