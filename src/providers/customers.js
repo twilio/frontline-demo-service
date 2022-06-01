@@ -1,15 +1,3 @@
-// For Inbound Routing: Map between customer address and worker identity
-// Used to determine to which worker a new conversation with a particular customer should be routed to.
-// {
-//     customerAddress: workerIdentity
-// }
-//
-// Example:
-//     {
-//         'whatsapp:+12345678': 'john@example.com'
-//     }
-const customersToWorkersMap = {};
-
 // Customers list
 // Example:
 // [
@@ -32,23 +20,22 @@ const customersToWorkersMap = {};
 //   }
 // ]
 
-const customers = [];
-
-const findWorkerForCustomer = async (customerNumber) => customersToWorkersMap[customerNumber];
-
-const findRandomWorker = async () => {
-    const onlyUnique = (value, index, self) => {
-        return self.indexOf(value) === index;
+const customers = [
+    {
+        customer_id: 1,
+        display_name: "Dmytro Savin",
+        channels: [
+            { type: 'sms', value: '+37253551669' },
+            { type: 'whatsapp', value: 'whatsapp:+37253551669' }
+        ],
+        opt_out: {
+            
+        }
     }
-
-    const workers = Object.values(customersToWorkersMap).filter(onlyUnique)
-    const randomIndex = Math.floor(Math.random() * workers.length)
-
-    return workers[randomIndex]
-}
+];
 
 const getCustomersList = async (worker, pageSize, anchor) => {
-    const workerCustomers = customers.filter(customer => customer.worker === worker);
+    const workerCustomers = customers;
     const list = workerCustomers.map(customer => ({
         display_name: customer.display_name,
         customer_id: customer.customer_id,
@@ -76,10 +63,16 @@ const getCustomerById = async (customerId) => {
     return customers.find(customer => String(customer.customer_id) === String(customerId));
 };
 
+const updateCustomer = async (customerId, payload) => {
+    return getCustomerById(customerId)
+    .then(customer => {
+        Object.assign(customer, payload)
+        return customer;
+    })
+}
+
 module.exports = {
-    customersToWorkersMap,
-    findWorkerForCustomer,
-    findRandomWorker,
+    updateCustomer,
     getCustomerById,
     getCustomersList,
     getCustomerByNumber

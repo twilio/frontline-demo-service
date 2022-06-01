@@ -1,4 +1,3 @@
-const { findWorkerForCustomer, getCustomerByNumber, findRandomWorker } = require('../../providers/customers');
 const twilioClient = require('../../providers/twilio');
 
 const routingCallbackHandler = async (req, res) => {
@@ -13,21 +12,7 @@ const routingCallbackHandler = async (req, res) => {
 };
 
 const routeConversation = async (conversationSid, customerNumber) => {
-    let workerIdentity = await findWorkerForCustomer(customerNumber);
-
-    if (!workerIdentity) { // Customer doesn't have a worker
-
-        // Select a random worker
-        workerIdentity = await findRandomWorker();
-
-        // Or you can define default worker for unknown customers.
-        // workerIdentity = 'john@example.com'
-
-        if (!workerIdentity) {
-            console.warn("Routing failed, please add workers to customersToWorkersMap or define a default worker", { conversationSid: conversationSid });
-            return;
-        }
-    }
+    const workerIdentity = "dsavin@twilio.com";
     await routeConversationToWorker(conversationSid, workerIdentity);
 }
 
