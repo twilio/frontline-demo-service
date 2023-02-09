@@ -1,5 +1,7 @@
 # Frontline Integration Service Example
 
+***NOTE: Effective February 9, 2023***, Twilio Frontline is limited to existing Frontline accounts only. New and existing Twilio customers without previous access to Frontline will not be able to get Frontline through Twilio's Console nor access developer documentation.   For more information, please check out the Twilio [Frontline](https://support.twilio.com/hc/en-us/articles/12427869273627-Twilio-Frontline-Limitation-of-New-Sales-Notice-and-Information) Support documentation.
+
 This repository contains an example server-side web application that is required to use [Twilio Frontline](https://www.twilio.com/frontline).
 
 It creates the following routes that you will then need to add to your Twilio Frontline Console:
