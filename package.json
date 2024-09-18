@@ -16,7 +16,7 @@
   "dependencies": {
     "axios": "^1.6.4",
     "dotenv": "^8.2.0",
-    "express": "^4.17.1",
+    "express": "^4.20.0",
     "twilio": "^4.19.3",
     "uuid": "^7.0.3"
   },
